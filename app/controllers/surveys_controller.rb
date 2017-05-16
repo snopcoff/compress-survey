@@ -1,5 +1,5 @@
 class SurveysController < ApplicationController
-  before_action :set_survey, only: [:show, :edit, :update, :destroy]
+  before_action :set_survey, only: [:show, :edit, :update, :destroy, :answers]
 
   # GET /surveys
   # GET /surveys.json
@@ -60,6 +60,11 @@ class SurveysController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def answers
+    @users = User.all
+    @questions = @survey.questions
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +74,7 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params.require(:survey).permit(:name)
+      params.require(:survey).permit(:name, :questions_attributes => [:id, :encfile, :decfile, 
+        :answers_attributes => [:id, :mark, :user_id]])
     end
 end
