@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170516045543) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "name"
+    t.boolean  "is_admin",               default: false
     t.boolean  "has_done",               default: false
   end
 
