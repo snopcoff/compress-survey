@@ -66,7 +66,7 @@ class SurveysController < ApplicationController
   end
   
   def answers
-    @questions = @survey.questions
+    @questions = @survey.questions.paginate(:page => params[:page], :per_page => 1)
   end
 
   private

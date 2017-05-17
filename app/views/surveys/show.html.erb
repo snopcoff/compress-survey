@@ -23,6 +23,10 @@
           <% user.questions.each do |question| %>
             <td><%= question.answers.find_by(user_id: user.id).mark %></td>
           <% end %>
+          <% for i in 0...(5-user.questions.count) %>
+            <td></td>
+          <% end %>
+          <td><%= total(user) %></td>
         </tr>
       <% end %>
     <% end %>

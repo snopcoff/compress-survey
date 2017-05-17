@@ -2,8 +2,32 @@
   <%= form_for(@survey) do |f| %>
     <% @questions.each do |question| %>
       <h1>Question <%= question.id %></h1>
-      File 1: <%= audio_tag(question.encfile, controls: true) %>
-      File 2: <%= audio_tag(question.decfile, controls: true) %>
+      <h2>Nghe 2 file audio dưới đây và so sánh file 2 với file 1 theo thang điểm tương ứng</h2>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="media">
+            <div class="media-body">
+              <h4 class="media-heading">File 1</h4>
+            </div>
+            <div class="media-right">
+              <%= audio_tag(question.encfile, controls: true) %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-5 col-md-offset-2">
+          <div class="media">
+            <div class="media-body">
+              <h4 class="media-heading">File 2</h4>
+            </div>
+            <div class="media-right">
+              <%= audio_tag(question.decfile, controls: true) %>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
       <div class="row">
         <div class="left col-md-offset-5">
           <%= f.fields_for :questions, question do |q| %>
@@ -35,8 +59,14 @@
         </div>
       </div>
     <% end %>
-    <div class="actions">
-      <%= f.submit("Submit survey", class: "btn btn-primary") %>
-    </div>
+    <% if @questions.total_pages == @questions.current_page %>
+      <div class="actions">
+        <%= f.submit("Submit survey", class: "btn btn-primary") %>
+      </div>
+    <% end %>
   <% end %>
+  <div class="digg_pagination">
+    <%= will_paginate @questions %>
+  </div>
+  
 </div>
