@@ -5,7 +5,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.json
   def index
-    @surveys = Survey.all
+    @users = User.all
   end
 
   # GET /surveys/1
@@ -43,7 +43,8 @@ class SurveysController < ApplicationController
   def update
     respond_to do |format|
       if @survey.update(survey_params)
-        format.html { redirect_to @survey, notice: 'Survey was successfully updated.' }
+        User.find(current_user.id).update_attribute(:has_done, true)
+        format.html { redirect_to root_path, notice: 'Thank you for doing this survey.' }
         format.json { render :show, status: :ok, location: @survey }
       else
         format.html { render :edit }
@@ -63,14 +64,13 @@ class SurveysController < ApplicationController
   end
   
   def answers
-    @users = User.all
     @questions = @survey.questions
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
-      @survey = Survey.find(params[:id])
+      @survey = Survey.find(1)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
