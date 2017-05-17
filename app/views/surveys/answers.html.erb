@@ -1,32 +1,42 @@
-# app/views/survey/answers.html.erb
-<h1><%= @survey.name %> Answers</h1>
-
-<%= form_for(@survey) do |f| %>
-  <h3><%= current_user.name %></h3>
-  <table>
-    <thead>
-      <tr>
-        <td>Questions</td>
-        <td>Answer</td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @questions.each do |question| -%>
-      <tr>
-        <td><%= question.encfile %> / <%= question.decfile %></td>
-        <td>
-        <%= f.fields_for :questions, question do |q| %>
-          <%= q.fields_for :answers, question.answers.find_or_initialize_by(user: current_user) do |a| %>
-            <%= a.number_field :mark %>
-            <%= a.hidden_field :user_id, value: current_user.id %>
+<div class="center jumbotron">
+  <%= form_for(@survey) do |f| %>
+    <% @questions.each do |question| %>
+      <h1>Question <%= question.id %></h1>
+      File 1: <%= audio_tag(question.encfile, controls: true) %>
+      File 2: <%= audio_tag(question.decfile, controls: true) %>
+      <div class="row">
+        <div class="left col-md-offset-5">
+          <%= f.fields_for :questions, question do |q| %>
+            <%= q.fields_for :answers, question.answers.find_or_initialize_by(user: current_user) do |a| %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, 3) %> 3 (Much better)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, 2) %> 2 (Better)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, 1) %> 1 (Slightly better)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, 0) %> 0 (About the same)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, -1) %> -1 (Slightly worse)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, -2) %> -2 (Worse)
+              <% end %>
+              <%= f.label(:mark, class: "radio") do %>
+                <%= a.radio_button(:mark, -3) %> -3 (Much worse)
+              <% end %>
+              <%= a.hidden_field :user_id, value: current_user.id %>
+            <% end %>
           <% end %>
-        <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="actions">
+      <%= f.submit("Submit survey", class: "btn btn-primary") %>
+    </div>
+  <% end %>
+</div>

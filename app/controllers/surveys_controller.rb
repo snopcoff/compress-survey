@@ -1,21 +1,23 @@
 class SurveysController < ApplicationController
   before_action :authenticate_user!
+  before_action :get_admin, only: [:show, :index, :edit, :destroy]
   before_action :set_survey, only: [:show, :edit, :update, :destroy, :answers]
 
   # GET /surveys
   # GET /surveys.json
-  def index
-    @users = User.all
-  end
+  # def index
+  #  @users = User.all
+  # end
 
   # GET /surveys/1
   # GET /surveys/1.json
   def show
+    @users = User.all
   end
 
   # GET /surveys/new
   def new
-    @survey = Survey.new
+   @survey = Survey.new
   end
 
   # GET /surveys/1/edit
@@ -78,4 +80,11 @@ class SurveysController < ApplicationController
       params.require(:survey).permit(:name, :questions_attributes => [:id, :encfile, :decfile, 
         :answers_attributes => [:id, :mark, :user_id]])
     end
+    
+    def get_admin
+      if !current_user.is_admin
+        redirect_to root_path
+      end
+    end
+    
 end

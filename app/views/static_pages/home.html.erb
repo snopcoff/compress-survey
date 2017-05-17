@@ -3,16 +3,21 @@
       <h1>
         Welcome <%= current_user.name %>!
       </h1>
-      <% if current_user.has_done %>
-          <h2>
-              If you want to edit your last survey, click the button
-          </h2>
-          <%= link_to "Edit survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+      <% if current_user.is_admin %>
+        <h2>Click the button if you want to view survey's result</h2>
+        <%= link_to "Survey Result", survey_path(1), class: "btn btn-lg btn-primary" %>
       <% else %>
-          <h2>
-              If you want to start doing the survey, click the button
-          </h2>
-          <%= link_to "Start survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+        <% if current_user.has_done %>
+            <h2>
+                If you want to edit your last survey, click the button
+            </h2>
+            <%= link_to "Edit survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+        <% else %>
+            <h2>
+                If you want to start doing the survey, click the button
+            </h2>
+            <%= link_to "Start survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+        <% end %>
       <% end %>
   <% else %>
       <h1>
