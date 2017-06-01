@@ -21,7 +21,10 @@
         <tr>
           <td><%= user.name %></td>
           <% user.questions.each do |question| %>
-            <td><%= question.answers.find_by(user_id: user.id).mark %></td>
+            <td>
+              <%= question.answers.find_by(user_id: user.id).mark %>
+              <%= question.answers.find_by(user_id: user.id).mark==0 %>
+            </td>
           <% end %>
           <% for i in 0...(5-user.questions.count) %>
             <td></td>
