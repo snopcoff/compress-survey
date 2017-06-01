@@ -1,0 +1,31 @@
+<div class="center jumbotron">
+  <% if user_signed_in? %>
+      <h1>
+        Welcome <%= current_user.name %>!
+      </h1>
+      <% if current_user.is_admin %>
+        <h2>Click the button if you want to view survey's result</h2>
+        <%= link_to "Survey Result", survey_path(1), class: "btn btn-lg btn-primary" %>
+      <% else %>
+        <% if current_user.has_done %>
+            <h2>
+                If you want to edit your last survey, click the button
+            </h2>
+            <%= link_to "Edit survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+        <% else %>
+            <h2>
+                If you want to start doing the survey, click the button
+            </h2>
+            <%= link_to "Start survey", answers_survey_path(1), class: "btn btn-lg btn-primary" %>
+        <% end %>
+      <% end %>
+  <% else %>
+      <h1>
+        Welcome Guest!  
+      </h1>
+      <h2>
+        Before you do the survey, please log in.
+      </h2>
+      <%= link_to "Log in", new_user_session_path, class: "btn btn-lg btn-primary" %>
+  <% end %>
+</div>

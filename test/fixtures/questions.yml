@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  encfile: MyString
+  decfile: MyString
+  survey_id: 
+
+two:
+  encfile: MyString
+  decfile: MyString
+  survey_id: 

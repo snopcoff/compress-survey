@@ -1,0 +1,17 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "Survey", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Home", root_path %></li>
+        <li>
+            <% if user_signed_in? %>
+                <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+            <% else %>
+                <%= link_to "Log in", new_user_session_path %>
+            <% end %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
